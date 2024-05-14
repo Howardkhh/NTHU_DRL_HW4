@@ -7,18 +7,26 @@ class Network(torch.nn.Module):
     def __init__(self, input_shape, n_actions, action_space):
         super(Network, self).__init__()
         self.meanNet = torch.nn.Sequential(
-            torch.nn.Linear(input_shape, 256),
+            torch.nn.Linear(input_shape, 512),
             torch.nn.ReLU(),
-            torch.nn.Linear(256, 256),
+            torch.nn.Linear(512, 512),
             torch.nn.ReLU(),
-            torch.nn.Linear(256, n_actions)
+            torch.nn.Linear(512, 512),
+            torch.nn.ReLU(),
+            torch.nn.Linear(512, 512),
+            torch.nn.ReLU(),
+            torch.nn.Linear(512, n_actions)
         )
         self.logNet = torch.nn.Sequential(
-            torch.nn.Linear(input_shape, 256),
+            torch.nn.Linear(input_shape, 512),
             torch.nn.ReLU(),
-            torch.nn.Linear(256, 256),
+            torch.nn.Linear(512, 512),
             torch.nn.ReLU(),
-            torch.nn.Linear(256, n_actions)
+            torch.nn.Linear(512, 512),
+            torch.nn.ReLU(),
+            torch.nn.Linear(512, 512),
+            torch.nn.ReLU(),
+            torch.nn.Linear(512, n_actions)
         )
 
         self.action_scale = torch.tensor((action_space.high - action_space.low) / 2, dtype=torch.float32)
